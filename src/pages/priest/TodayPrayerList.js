@@ -6,6 +6,7 @@ import { authService } from '../../services/authService.js';
 import { getTodayDateString, formatFullDate } from '../../utils/dateUtils.js';
 import { formatCurrency } from '../../utils/formatters.js';
 import { renderOfflineBookingModalHtml, attachOfflineBookingModalEvents } from '../../components/OfflineBookingModal.js';
+import { supabaseService } from '../../services/supabaseService.js';
 
 export async function renderTodayPrayerListPage(router) {
   const todayStr = getTodayDateString();
@@ -18,13 +19,22 @@ export async function renderTodayPrayerListPage(router) {
     <!-- Top Altar Toolbar -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
       <div>
-        <h2 style="font-size: 1.65rem; margin-bottom: 0.25rem;">Altar Mass Intentions & Prayer Sheet</h2>
+        <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+          <h2 style="font-size: 1.65rem; margin-bottom: 0.25rem;">Altar Mass Intentions & Prayer Sheet</h2>
+          <span style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: #15803d; background: #f0fdf4; border: 1px solid #86efac; padding: 0.2rem 0.6rem; border-radius: var(--radius-full);">
+            <span style="width: 7px; height: 7px; background: #22c55e; border-radius: 50%; display: inline-block;"></span>
+            LIVE SYNC
+          </span>
+        </div>
         <p style="color: var(--text-muted); margin: 0; font-size: 0.9rem;">
           Official liturgical intentions grouped by Mass time and intention categories for <strong>${formatFullDate(todayStr)}</strong>.
         </p>
       </div>
 
       <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <button id="btn-refresh-altar" class="btn btn-outline btn-sm" title="Refresh Live Prayer Sheet">
+          🔄 Refresh
+        </button>
         <button id="btn-open-offline-booking-modal" class="btn btn-outline btn-sm btn-open-offline-booking-modal">
           ➕ Add Cash Intention
         </button>
@@ -193,6 +203,21 @@ export function attachTodayPrayerListEvents(router) {
 
   const todayStr = getTodayDateString();
   const user = authService.getCurrentUser();
+
+  // Refresh live altar prayer sheet button
+  document.getElementById('btn-refresh-altar')?.addEventListener('click', () => {
+    notificationService.info('Refreshing altar prayer sheet...');
+    router.navigate('/priest/today-prayers');
+  });
+
+  // Supabase Realtime Listener for priest altar list
+  if (supabaseService.isConfigured()) {
+    supabaseService.subscribeToBookings((payload) => {
+      if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
+        router.navigate('/priest/today-prayers');
+      }
+    });
+  }
 
   // Download Altar Sheet PDF
   document.getElementById('btn-dl-altar-pdf')?.addEventListener('click', async () => {

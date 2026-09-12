@@ -6,6 +6,7 @@ import { notificationService } from '../../services/notificationService.js';
 import { formatDate, formatDateTime } from '../../utils/dateUtils.js';
 import { formatCurrency } from '../../utils/formatters.js';
 import { renderOfflineBookingModalHtml, attachOfflineBookingModalEvents } from '../../components/OfflineBookingModal.js';
+import { supabaseService } from '../../services/supabaseService.js';
 
 export async function renderManageBookingsPage(router) {
   const bookings = await firestoreService.getCollection('massIntentions');
@@ -15,13 +16,22 @@ export async function renderManageBookingsPage(router) {
   const contentHtml = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
       <div>
-        <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Master Mass Intentions Database</h2>
+        <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+          <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Master Mass Intentions Database</h2>
+          <span style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: #15803d; background: #f0fdf4; border: 1px solid #86efac; padding: 0.2rem 0.6rem; border-radius: var(--radius-full);">
+            <span style="width: 7px; height: 7px; background: #22c55e; border-radius: 50%; display: inline-block;"></span>
+            LIVE SYNC
+          </span>
+        </div>
         <p style="color: var(--text-muted); margin: 0; font-size: 0.85rem;">
           Total registered intentions: <strong>${bookings.length}</strong> (Online & Counter Cash)
         </p>
       </div>
 
       <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button id="btn-refresh-bookings" class="btn btn-outline btn-sm" title="Refresh Live Data">
+          🔄 Refresh
+        </button>
         <button id="btn-open-offline-booking-modal" class="btn btn-gold btn-sm btn-open-offline-booking-modal">
           ➕ Register Cash / Counter Intention
         </button>
@@ -208,6 +218,30 @@ export function attachManageBookingsEvents(router) {
   search?.addEventListener('input', filter);
   statusSel?.addEventListener('change', filter);
   typeSel?.addEventListener('change', filter);
+
+  // Refresh live data button
+  document.getElementById('btn-refresh-bookings')?.addEventListener('click', () => {
+    notificationService.info('Refreshing bookings from Supabase cloud...');
+    router.navigate('/admin/bookings');
+  });
+
+  // Supabase Realtime Listener: Auto-update on new booking from any phone
+  if (supabaseService.isConfigured()) {
+    const channel = supabaseService.subscribeToBookings((payload) => {
+      if (payload.eventType === 'INSERT') {
+        const booker = payload.new?.full_name || 'A parishioner';
+        const souls = payload.new?.person_names || '';
+        notificationService.success(`🔔 New Mass Intention received from ${booker} (${souls})!`);
+        setTimeout(() => {
+          router.navigate('/admin/bookings');
+        }, 800);
+      } else if (payload.eventType === 'UPDATE') {
+        setTimeout(() => {
+          router.navigate('/admin/bookings');
+        }, 500);
+      }
+    });
+  }
 
   // Quick filter for pending verifications
   document.getElementById('btn-filter-pending-screenshots')?.addEventListener('click', () => {

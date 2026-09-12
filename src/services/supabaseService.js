@@ -1,4 +1,4 @@
-﻿// Supabase Database Service
+// Supabase Database Service
 import { supabase, isSupabaseConfigured } from '../config/supabase.js';
 
 export const supabaseService = {
@@ -159,6 +159,30 @@ export const supabaseService = {
       }));
     } catch (err) {
       console.warn('⚠️ Supabase getPriests error:', err);
+      return null;
+    }
+  },
+
+  // 4. REALTIME LIVE SYNC
+  subscribeToBookings(callback) {
+    if (!isSupabaseConfigured) return null;
+    try {
+      const channel = supabase
+        .channel('realtime_bookings_stream')
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'bookings' },
+          (payload) => {
+            if (typeof callback === 'function') {
+              callback(payload);
+            }
+          }
+        )
+        .subscribe();
+
+      return channel;
+    } catch (err) {
+      console.warn('⚠️ Supabase realtime subscription error:', err);
       return null;
     }
   }
