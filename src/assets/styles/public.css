@@ -1,0 +1,650 @@
+/* ============================================================
+   PUBLIC PARISH WEBSITE STYLES
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   NAVBAR & HEADER
+   ------------------------------------------------------------ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(253, 251, 247, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: all var(--transition-normal);
+}
+
+body.theme-dark .site-header {
+  background: rgba(10, 15, 29, 0.95);
+  border-bottom-color: var(--border-subtle);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+}
+
+.brand-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+}
+
+.brand-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--primary-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
+}
+
+.brand-text-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+
+.brand-subtitle {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold-accent-hover);
+  font-weight: 700;
+}
+
+body.theme-dark .brand-subtitle {
+  color: var(--gold-accent);
+}
+
+.nav-links-desktop {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav-link {
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  position: relative;
+  padding: 0.5rem 0.25rem;
+  transition: color var(--transition-fast);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--primary-navy);
+}
+
+body.theme-dark .nav-link:hover,
+body.theme-dark .nav-link.active {
+  color: var(--gold-accent);
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gold-accent);
+  border-radius: var(--radius-full);
+}
+
+.nav-actions-desktop {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.theme-toggle-btn {
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--gold-accent);
+  color: var(--gold-accent);
+  transform: rotate(15deg);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.4rem;
+}
+
+/* Mobile Nav Drawer */
+.mobile-nav-drawer {
+  display: none;
+  position: fixed;
+  inset: var(--header-height) 0 0 0;
+  background: var(--bg-surface);
+  z-index: 999;
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: 1.25rem;
+  box-shadow: var(--shadow-xl);
+  overflow-y: auto;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.mobile-nav-drawer.open {
+  display: flex;
+  animation: fadeIn 200ms ease;
+}
+
+/* ------------------------------------------------------------
+   HERO SECTION
+   ------------------------------------------------------------ */
+.hero-section {
+  position: relative;
+  padding: 5rem 0 6rem;
+  background: linear-gradient(180deg, var(--bg-subtle) 0%, var(--bg-primary) 100%);
+  border-bottom: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+body.theme-dark .hero-section {
+  background: linear-gradient(180deg, #131d36 0%, #0a0f1d 100%);
+}
+
+.hero-backdrop-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: radial-gradient(var(--gold-accent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  background: var(--gold-accent-light);
+  color: #854d0e;
+  border: 1px solid var(--gold-accent-border);
+  border-radius: var(--radius-full);
+  font-size: 0.825rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 1.5rem;
+}
+
+body.theme-dark .hero-badge {
+  background: rgba(230, 202, 101, 0.15);
+  color: var(--gold-accent);
+}
+
+.hero-title {
+  font-size: 3.25rem;
+  margin-bottom: 1.25rem;
+  color: var(--text-primary);
+  line-height: 1.15;
+}
+
+.hero-title span.highlight {
+  color: var(--primary-navy);
+  position: relative;
+  display: inline-block;
+}
+
+body.theme-dark .hero-title span.highlight {
+  color: var(--gold-accent);
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 2rem;
+  max-width: 540px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.hero-stats-strip {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-medium);
+}
+
+.hero-stat-item h4 {
+  font-size: 1.5rem;
+  font-family: var(--font-serif);
+  color: var(--primary-navy);
+  margin-bottom: 0.15rem;
+}
+
+body.theme-dark .hero-stat-item h4 {
+  color: var(--gold-accent);
+}
+
+.hero-stat-item p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.hero-image-card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  border: 2px solid var(--border-gold);
+}
+
+.hero-church-img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.75rem 1.5rem;
+  background: linear-gradient(0deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0) 100%);
+  color: #ffffff;
+}
+
+.hero-overlay-title {
+  color: var(--gold-accent);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.hero-overlay-desc {
+  font-size: 0.85rem;
+  color: #e2e8f0;
+  margin-bottom: 0;
+}
+
+/* ------------------------------------------------------------
+   SECTIONS GENERAL
+   ------------------------------------------------------------ */
+.section {
+  padding: 5rem 0;
+}
+
+.section-alt {
+  background: var(--bg-surface-alt);
+}
+
+.section-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 3.5rem;
+}
+
+.section-eyebrow {
+  font-size: 0.825rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gold-accent-hover);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+body.theme-dark .section-eyebrow {
+  color: var(--gold-accent);
+}
+
+.section-title {
+  font-size: 2.25rem;
+  margin-bottom: 0.85rem;
+}
+
+.section-desc {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+/* ------------------------------------------------------------
+   MASS SCHEDULE GRID
+   ------------------------------------------------------------ */
+.schedule-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.schedule-tab-btn {
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.schedule-tab-btn.active,
+.schedule-tab-btn:hover {
+  background: var(--primary-navy);
+  color: #ffffff;
+  border-color: var(--primary-navy);
+}
+
+body.theme-dark .schedule-tab-btn.active {
+  background: var(--gold-accent);
+  color: #0f172a;
+  border-color: var(--gold-accent);
+}
+
+.schedule-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.schedule-card {
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.schedule-card-time {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.schedule-time-badge {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+}
+
+body.theme-dark .schedule-time-badge {
+  color: var(--gold-accent);
+}
+
+.language-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-alt);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.schedule-details h5 {
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.schedule-details p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* ------------------------------------------------------------
+   HOW IT WORKS GRID
+   ------------------------------------------------------------ */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  position: relative;
+}
+
+.step-card {
+  text-align: center;
+  padding: 2rem 1.25rem;
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.step-number {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--gold-accent-light);
+  color: #854d0e;
+  border: 2px solid var(--gold-accent);
+  font-weight: 800;
+  font-family: var(--font-serif);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+}
+
+body.theme-dark .step-number {
+  background: rgba(230, 202, 101, 0.2);
+  color: var(--gold-accent);
+}
+
+.step-card h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.step-card p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* ------------------------------------------------------------
+   SPIRITUAL / PRAYER SECTION
+   ------------------------------------------------------------ */
+.prayer-reflection-card {
+  background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+  color: #ffffff;
+  border-radius: var(--radius-xl);
+  padding: 3.5rem 2.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--border-gold);
+  box-shadow: var(--shadow-xl);
+}
+
+.prayer-reflection-card h3 {
+  color: var(--gold-accent);
+  font-size: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.prayer-quote {
+  font-family: var(--font-body-serif);
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.7;
+  max-width: 760px;
+  margin: 0 auto 1.5rem;
+  color: #f1f5f9;
+}
+
+.prayer-citation {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gold-accent);
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------
+   FOOTER
+   ------------------------------------------------------------ */
+.site-footer {
+  background: #0f172a;
+  color: #94a3b8;
+  padding: 4.5rem 0 2rem;
+  border-top: 2px solid var(--gold-accent);
+  margin-top: auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 3rem;
+  margin-bottom: 3.5rem;
+}
+
+.footer-brand h3 {
+  color: #ffffff;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.footer-brand p {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.footer-col h4 {
+  color: #ffffff;
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.03em;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.footer-links a {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+  color: var(--gold-accent);
+}
+
+.footer-bottom {
+  padding-top: 2rem;
+  border-top: 1px solid #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #64748b;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE MEDIA QUERIES
+   ------------------------------------------------------------ */
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .hero-church-img {
+    height: 320px;
+  }
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links-desktop,
+  .nav-actions-desktop .btn {
+    display: none;
+  }
+  .mobile-menu-btn {
+    display: block;
+  }
+  .hero-title {
+    font-size: 2.35rem;
+  }
+  .hero-stats-strip {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .section {
+    padding: 3.5rem 0;
+  }
+}

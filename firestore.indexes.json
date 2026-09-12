@@ -1,0 +1,37 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "massIntentions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "massIntentions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "massDate", "order": "ASCENDING" },
+        { "fieldPath": "bookingStatus", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "massIntentions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "bookingStatus", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "payments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

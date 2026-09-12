@@ -1,0 +1,246 @@
+// PDF Generation Engine for Official Parish Receipts & Altar Prayer Lists
+
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+import { formatFullDate, formatDate } from '../utils/dateUtils.js';
+import { CHURCH_DETAILS } from '../config/constants.js';
+
+export const pdfService = {
+  // Generate & Download Official Mass Intention Receipt
+  generateMemberReceiptPDF(booking) {
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4'
+    });
+
+    const primaryColor = [30, 58, 138];  // Marian Navy
+    const goldColor = [212, 175, 55];    // Liturgical Gold
+    const slateDark = [15, 23, 42];
+
+    // Top Header Banner
+    doc.setFillColor(...primaryColor);
+    doc.rect(0, 0, 210, 36, 'F');
+
+    // Liturgical Gold Border Accent
+    doc.setFillColor(...goldColor);
+    doc.rect(0, 36, 210, 2.5, 'F');
+
+    // Header Text
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(17);
+    doc.text('OUR LADY OF DOLOURS PARISH CHURCH', 105, 14, { align: 'center' });
+
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.text(CHURCH_DETAILS.location + ' | ' + CHURCH_DETAILS.phone, 105, 21, { align: 'center' });
+    doc.text('OFFICIAL MASS INTENTION RECEIPT & PRAYER RECORD', 105, 28, { align: 'center' });
+
+    // Receipt Meta Details Box
+    doc.setFillColor(250, 250, 248);
+    doc.setDrawColor(220, 220, 215);
+    doc.roundedRect(14, 46, 182, 30, 3, 3, 'FD');
+
+    doc.setTextColor(...primaryColor);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.text('BOOKING ID:', 20, 55);
+    doc.text('ISSUED DATE:', 120, 55);
+    doc.text('PAYMENT STATUS:', 20, 68);
+    doc.text('PAYMENT REF ID:', 120, 68);
+
+    doc.setTextColor(...slateDark);
+    doc.setFont('helvetica', 'normal');
+    doc.text(booking.bookingId || 'OLDD-RECEIPT', 55, 55);
+    doc.text(formatDate(booking.createdAt || new Date()), 155, 55);
+
+    doc.setTextColor(21, 128, 61); // Green
+    doc.setFont('helvetica', 'bold');
+    doc.text((booking.paymentStatus || 'PAID') + ' (VERIFIED)', 60, 68);
+
+    doc.setTextColor(...slateDark);
+    doc.setFont('helvetica', 'normal');
+    doc.text(booking.paymentId || 'N/A', 158, 68);
+
+    // Main Details Table
+    const tableData = [
+      ['Parishioner Name', booking.fullName || 'Parish Member'],
+      ['Contact Number / Email', `${booking.phone || 'N/A'} | ${booking.email || 'N/A'}`],
+      ['Intention Type', booking.intentionType || 'Mass Intention'],
+      ['Person(s) to Pray For', booking.personNames || 'N/A'],
+      ['Date of Holy Mass', formatFullDate(booking.massDate)],
+      ['Scheduled Mass Time', booking.massTime || 'N/A'],
+      ['Celebrant Priest / Chapel', booking.approvedBy || 'Parish Clergy'],
+      ['Special Remembrance Notes', booking.notes || 'None'],
+      ['Mass Offering Stipend', `INR ₹${booking.offeringAmount || 0}`]
+    ];
+
+    doc.autoTable({
+      startY: 84,
+      margin: { left: 14, right: 14 },
+      head: [['Mass Intention Details', 'Parish Record']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: primaryColor,
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        fontSize: 10
+      },
+      columnStyles: {
+        0: { cellWidth: 60, fontStyle: 'bold', textColor: slateDark, fillColor: [248, 250, 252] },
+        1: { textColor: slateDark }
+      },
+      styles: {
+        fontSize: 9.5,
+        cellPadding: 4.5
+      }
+    });
+
+    const finalY = doc.lastAutoTable.finalY + 12;
+
+    // Spiritual Benediction Quote
+    doc.setFillColor(243, 244, 246);
+    doc.roundedRect(14, finalY, 182, 22, 2, 2, 'F');
+    doc.setTextColor(71, 85, 105);
+    doc.setFont('times', 'italic');
+    doc.setFontSize(9.5);
+    doc.text('“The Holy Sacrifice of the Mass is the greatest prayer on Earth for the living and the departed.”', 105, finalY + 9, { align: 'center' });
+    doc.text('May God’s grace and the maternal intercession of Our Lady of Dolours be with you always.', 105, finalY + 16, { align: 'center' });
+
+    // Signature and Stamp Block
+    const signY = finalY + 36;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...slateDark);
+
+    // Left: Parish Seal
+    doc.setDrawColor(...goldColor);
+    doc.setLineWidth(0.8);
+    doc.circle(38, signY + 4, 12);
+    doc.setFontSize(6.5);
+    doc.setTextColor(...primaryColor);
+    doc.text('PARISH SEAL', 38, signY + 3, { align: 'center' });
+    doc.text('VERIFIED', 38, signY + 6.5, { align: 'center' });
+
+    // Right: Parish Priest Signature
+    doc.setFontSize(9);
+    doc.setTextColor(...slateDark);
+    doc.line(130, signY + 8, 190, signY + 8);
+    doc.text('Parish Priest / Church Office', 160, signY + 13, { align: 'center' });
+    doc.setFontSize(7.5);
+    doc.setTextColor(100, 116, 139);
+    doc.text('Authorized Digital Record', 160, signY + 17, { align: 'center' });
+
+    // Footer
+    doc.setFontSize(8);
+    doc.setTextColor(148, 163, 184);
+    doc.text(`Generated by OLDD Parish Portal on ${new Date().toLocaleString()} | ID: ${booking.bookingId}`, 105, 288, { align: 'center' });
+
+    doc.save(`Mass_Intention_Receipt_${booking.bookingId || 'OLDD'}.pdf`);
+  },
+
+  // Generate & Download Priest Altar Prayer List PDF
+  generatePriestPrayerListPDF(dateStr, intentionsByTime) {
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4'
+    });
+
+    const primaryColor = [30, 58, 138];
+    const goldColor = [212, 175, 55];
+    const slateDark = [15, 23, 42];
+
+    // Header
+    doc.setFillColor(...primaryColor);
+    doc.rect(0, 0, 210, 32, 'F');
+    doc.setFillColor(...goldColor);
+    doc.rect(0, 32, 210, 2, 'F');
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(16);
+    doc.text('OUR LADY OF DOLOURS PARISH CHURCH', 105, 12, { align: 'center' });
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`ALTAR MASS INTENTION & PRAYER LIST`, 105, 19, { align: 'center' });
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Date of Holy Mass: ${formatFullDate(dateStr)}`, 105, 26, { align: 'center' });
+
+    let currentY = 42;
+
+    const times = Object.keys(intentionsByTime);
+
+    if (times.length === 0) {
+      doc.setTextColor(100, 116, 139);
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(11);
+      doc.text('No approved Mass intentions scheduled for this date.', 105, currentY + 20, { align: 'center' });
+    } else {
+      times.forEach((time) => {
+        const timeIntentions = intentionsByTime[time] || [];
+
+        // Mass Time Bar
+        doc.setFillColor(241, 245, 249);
+        doc.setDrawColor(...primaryColor);
+        doc.rect(14, currentY, 182, 9, 'FD');
+
+        doc.setTextColor(...primaryColor);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(11);
+        doc.text(`HOLY MASS: ${time} (${timeIntentions.length} Intentions)`, 20, currentY + 6.5);
+
+        currentY += 12;
+
+        const tableRows = timeIntentions.map((intent, idx) => [
+          String(idx + 1),
+          intent.intentionType.toUpperCase(),
+          intent.personNames,
+          intent.fullName || 'Parishioner',
+          intent.notes || '-'
+        ]);
+
+        doc.autoTable({
+          startY: currentY,
+          margin: { left: 14, right: 14 },
+          head: [['#', 'Intention Category', 'Person(s) to Pray For', 'Offered By', 'Remembrance Notes']],
+          body: tableRows,
+          theme: 'striped',
+          headStyles: {
+            fillColor: [51, 65, 85],
+            textColor: [255, 255, 255],
+            fontSize: 8.5
+          },
+          columnStyles: {
+            0: { cellWidth: 10, halign: 'center' },
+            1: { cellWidth: 35, fontStyle: 'bold' },
+            2: { cellWidth: 50, fontStyle: 'bold' },
+            3: { cellWidth: 38 },
+            4: { cellWidth: 49, fontSize: 8 }
+          },
+          styles: {
+            fontSize: 8.5,
+            cellPadding: 3
+          }
+        });
+
+        currentY = doc.lastAutoTable.finalY + 10;
+
+        // Add page if needed
+        if (currentY > 260) {
+          doc.addPage();
+          currentY = 20;
+        }
+      });
+    }
+
+    doc.setFontSize(8);
+    doc.setTextColor(148, 163, 184);
+    doc.text(`Official Liturgical Sheet | Generated for Celebrant at ${new Date().toLocaleTimeString()}`, 105, 288, { align: 'center' });
+
+    doc.save(`Altar_Prayer_List_${dateStr}.pdf`);
+  }
+};

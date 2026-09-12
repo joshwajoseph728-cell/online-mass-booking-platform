@@ -1,0 +1,414 @@
+/* ============================================================
+   ROLE-BASED DASHBOARD STYLES (MEMBER, PRIEST, ADMIN)
+   ============================================================ */
+
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+/* ------------------------------------------------------------
+   SIDEBAR
+   ------------------------------------------------------------ */
+.dashboard-sidebar {
+  width: var(--sidebar-width);
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: all var(--transition-normal);
+  z-index: 100;
+}
+
+.sidebar-brand {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sidebar-brand-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--primary-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-accent);
+}
+
+.sidebar-brand-info h4 {
+  font-size: 0.95rem;
+  font-family: var(--font-serif);
+  line-height: 1.2;
+}
+
+.sidebar-role-pill {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  background: var(--gold-accent-light);
+  color: #854d0e;
+}
+
+body.theme-dark .sidebar-role-pill {
+  background: rgba(230, 202, 101, 0.2);
+  color: var(--gold-accent);
+}
+
+.sidebar-nav {
+  padding: 1.25rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.sidebar-nav-item:hover {
+  background: var(--bg-surface-alt);
+  color: var(--text-primary);
+}
+
+.sidebar-nav-item.active {
+  background: var(--primary-navy);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
+}
+
+body.theme-dark .sidebar-nav-item.active {
+  background: var(--gold-accent);
+  color: #0f172a;
+}
+
+.sidebar-nav-item .nav-icon {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-badge {
+  margin-left: auto;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-full);
+  background: var(--gold-accent);
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.sidebar-footer {
+  padding: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ------------------------------------------------------------
+   MAIN WRAPPER & TOPBAR
+   ------------------------------------------------------------ */
+.dashboard-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dashboard-topbar {
+  height: var(--header-height);
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topbar-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topbar-search-box {
+  position: relative;
+  width: 260px;
+}
+
+.topbar-search-input {
+  width: 100%;
+  padding: 0.5rem 0.85rem 0.5rem 2.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-medium);
+  background: var(--bg-surface-alt);
+  font-size: 0.85rem;
+}
+
+.topbar-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.user-profile-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-subtle);
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--primary-navy);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.user-name-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ------------------------------------------------------------
+   DASHBOARD CONTENT BODY
+   ------------------------------------------------------------ */
+.dashboard-content {
+  padding: 2rem;
+  flex: 1;
+}
+
+/* Stats Metrics Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gold-gradient);
+}
+
+.stat-info h5 {
+  font-size: 0.825rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.stat-info .stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  font-family: var(--font-serif);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.stat-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-alt);
+  color: var(--primary-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+body.theme-dark .stat-icon-wrapper {
+  color: var(--gold-accent);
+}
+
+/* ------------------------------------------------------------
+   PRIEST ALTAR PRAYER SHEET PRESENTATION
+   ------------------------------------------------------------ */
+.altar-sheet {
+  background: var(--bg-surface);
+  border: 2px solid var(--gold-accent);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.altar-sheet-header {
+  text-align: center;
+  border-bottom: 2px solid var(--border-medium);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.altar-sheet-title {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  color: var(--primary-navy);
+  margin-bottom: 0.25rem;
+}
+
+body.theme-dark .altar-sheet-title {
+  color: var(--gold-accent);
+}
+
+.altar-sheet-date {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.mass-group-card {
+  margin-bottom: 2rem;
+  background: var(--bg-surface-alt);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.mass-group-header {
+  background: var(--primary-navy);
+  color: #ffffff;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mass-group-header h4 {
+  color: #ffffff;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+}
+
+.intention-category-block {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.intention-category-block:last-child {
+  border-bottom: none;
+}
+
+.intention-category-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold-accent-hover);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+body.theme-dark .intention-category-title {
+  color: var(--gold-accent);
+}
+
+.prayer-names-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.prayer-name-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.6rem;
+  background: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE DASHBOARD
+   ------------------------------------------------------------ */
+@media (max-width: 900px) {
+  .dashboard-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: -100%;
+    transition: left var(--transition-normal);
+  }
+  .dashboard-sidebar.mobile-open {
+    left: 0;
+  }
+  .dashboard-topbar {
+    padding: 0 1rem;
+  }
+  .topbar-search-box {
+    display: none;
+  }
+  .dashboard-content {
+    padding: 1.25rem 1rem;
+  }
+}

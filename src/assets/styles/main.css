@@ -1,0 +1,248 @@
+/* ============================================================
+   OUR LADY OF DOLOURS - CHURCH PORTAL GLOBAL DESIGN SYSTEM
+   ============================================================ */
+
+:root {
+  /* Color Palette - Light Theme */
+  --bg-primary: #fdfbf7;           /* Warm Light Cream */
+  --bg-surface: #ffffff;           /* Pure Crisp White */
+  --bg-surface-elevated: #f8fafc;  /* Subtle Soft Gray */
+  --bg-surface-alt: #f1f5f9;       /* Secondary Section Fill */
+  --bg-subtle: #f4efe6;            /* Liturgical Warm Tint */
+
+  --text-primary: #0f172a;         /* Deep Slate / Midnight Black */
+  --text-secondary: #475569;       /* Muted Charcoal Slate */
+  --text-muted: #64748b;           /* Tertiary Slate */
+  --text-inverse: #ffffff;         /* White Text */
+
+  --primary-navy: #1e3a8a;         /* Classic Marian Blue */
+  --primary-navy-dark: #0f172a;    /* Deep Midnight Church Navy */
+  --primary-navy-light: #2563eb;   /* Vibrant Soft Royal Blue */
+  --primary-blue-subtle: #eff6ff;  /* Soft Marian Tint */
+
+  --gold-accent: #d4af37;          /* Sacred Liturgical Gold */
+  --gold-accent-hover: #b8860b;    /* Dark Gold */
+  --gold-accent-light: #fef9c3;    /* Pale Gold Highlight */
+  --gold-accent-border: #eab308;   /* Gold Accent Border */
+  --gold-gradient: linear-gradient(135deg, #fef08a 0%, #d4af37 50%, #996515 100%);
+
+  --crimson-accent: #991b1b;       /* Sacred Heart Crimson */
+  --crimson-light: #fee2e2;
+
+  --success: #15803d;              /* Liturgical Green / Confirmation */
+  --success-bg: #dcfce7;
+  --warning: #b45309;              /* Amber / Pending */
+  --warning-bg: #fef3c7;
+  --danger: #b91c1c;               /* Error */
+  --danger-bg: #fee2e2;
+  --info: #0369a1;                 /* Informational Blue */
+  --info-bg: #e0f2fe;
+
+  --border-subtle: #e2e8f0;
+  --border-medium: #cbd5e1;
+  --border-gold: rgba(212, 175, 55, 0.4);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+  --shadow-gold: 0 4px 20px rgba(212, 175, 55, 0.25);
+
+  /* Typography */
+  --font-serif: 'Cinzel', 'Playfair Display', Georgia, serif;
+  --font-body-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Layout & Transitions */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  --header-height: 76px;
+  --sidebar-width: 270px;
+}
+
+/* Dark Theme Overrides */
+body.theme-dark {
+  --bg-primary: #0a0f1d;           /* Deep Nocturne Navy */
+  --bg-surface: #131b2e;           /* Elevated Slate Surface */
+  --bg-surface-elevated: #1a243b;  /* Elevated Card Surface */
+  --bg-surface-alt: #172033;       /* Secondary Section */
+  --bg-subtle: #1e293b;
+
+  --text-primary: #f8fafc;         /* Pure Light Gray */
+  --text-secondary: #cbd5e1;       /* Light Slate */
+  --text-muted: #94a3b8;           /* Muted Slate */
+  --text-inverse: #0f172a;
+
+  --primary-navy: #3b82f6;
+  --primary-navy-dark: #60a5fa;
+  --primary-navy-light: #93c5fd;
+  --primary-blue-subtle: rgba(59, 130, 246, 0.15);
+
+  --gold-accent: #e6ca65;          /* Luminous Gold for Dark Mode */
+  --gold-accent-hover: #fef08a;
+  --gold-accent-light: rgba(230, 202, 101, 0.15);
+  --gold-accent-border: rgba(230, 202, 101, 0.5);
+
+  --border-subtle: #1e293b;
+  --border-medium: #334155;
+  --border-gold: rgba(230, 202, 101, 0.3);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7);
+}
+
+/* ============================================================
+   BASE RESET & ACCESSIBILITY
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Accessible Focus States */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--gold-accent);
+  outline-offset: 2px;
+}
+
+/* Page Transition Bar */
+.page-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--gold-gradient);
+  z-index: 9999;
+  transition: width var(--transition-normal), opacity var(--transition-fast);
+  opacity: 0;
+}
+.page-progress-bar.active {
+  opacity: 1;
+  width: 75%;
+}
+.page-progress-bar.done {
+  width: 100%;
+  opacity: 0;
+}
+
+/* Typography Helpers */
+h1, h2, h3, h4, .church-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+p {
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--primary-navy);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover {
+  color: var(--gold-accent-hover);
+}
+
+/* Layout Container */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Subtle Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-accent);
+}
+
+/* Micro Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+  50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.45); }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--transition-normal) ease-out forwards;
+}

@@ -1,0 +1,338 @@
+/* ============================================================
+   MULTI-STEP MASS INTENTION BOOKING WIZARD STYLES
+   ============================================================ */
+
+.booking-wizard-container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+/* ------------------------------------------------------------
+   STEP INDICATOR
+   ------------------------------------------------------------ */
+.wizard-steps-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.wizard-steps-bar::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 30px;
+  right: 30px;
+  height: 3px;
+  background: var(--border-medium);
+  z-index: 1;
+}
+
+.wizard-step-node {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.step-bubble {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  border: 2px solid var(--border-medium);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.wizard-step-node.active .step-bubble {
+  background: var(--primary-navy);
+  border-color: var(--gold-accent);
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.25);
+}
+
+.wizard-step-node.completed .step-bubble {
+  background: var(--gold-accent);
+  border-color: var(--gold-accent);
+  color: #0f172a;
+}
+
+.step-label {
+  font-size: 0.775rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.wizard-step-node.active .step-label {
+  color: var(--text-primary);
+}
+
+/* ------------------------------------------------------------
+   INTENTION TYPE CARDS (STEP 1)
+   ------------------------------------------------------------ */
+.intention-types-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.intention-card-option {
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.25rem;
+  cursor: pointer;
+  background: var(--bg-surface);
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.intention-card-option:hover {
+  border-color: var(--gold-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.intention-card-option.selected {
+  border-color: var(--gold-accent);
+  background: var(--bg-surface-elevated);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
+}
+
+.intention-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.intention-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  color: var(--primary-navy);
+}
+
+body.theme-dark .intention-icon-box {
+  color: var(--gold-accent);
+}
+
+.intention-radio-check {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intention-card-option.selected .intention-radio-check {
+  border-color: var(--gold-accent);
+  background: var(--gold-accent);
+}
+.intention-card-option.selected .intention-radio-check::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: #0f172a;
+}
+
+.intention-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.intention-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0;
+  line-height: 1.4;
+}
+
+/* ------------------------------------------------------------
+   SCHEDULE & TIME SLOTS (STEP 2)
+   ------------------------------------------------------------ */
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.time-slot-btn {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 2px solid var(--border-subtle);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.time-slot-btn:hover {
+  border-color: var(--primary-navy-light);
+}
+
+.time-slot-btn.selected {
+  border-color: var(--gold-accent);
+  background: var(--primary-blue-subtle);
+}
+
+.time-slot-hour {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.time-slot-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------
+   OFFERING CHIPS (STEP 3)
+   ------------------------------------------------------------ */
+.offering-chips-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.offering-chip {
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.offering-chip:hover {
+  border-color: var(--gold-accent);
+}
+
+.offering-chip.selected {
+  background: var(--gold-accent);
+  color: #0f172a;
+  border-color: var(--gold-accent);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+/* ------------------------------------------------------------
+   REVIEW & CONFIRMATION (STEPS 4 & 5)
+   ------------------------------------------------------------ */
+.review-summary-box {
+  background: var(--bg-surface-alt);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.review-item-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px dashed var(--border-medium);
+}
+
+.review-item-row:last-child {
+  border-bottom: none;
+}
+
+.review-item-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.review-item-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: right;
+  max-width: 60%;
+}
+
+.confirmation-card-success {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--gold-accent);
+  box-shadow: var(--shadow-xl);
+}
+
+.confirmation-check-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-full);
+  background: var(--success-bg);
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.25rem;
+  margin: 0 auto 1.5rem;
+}
+
+.booking-id-pill {
+  display: inline-block;
+  font-family: monospace;
+  font-size: 1.25rem;
+  font-weight: 800;
+  padding: 0.4rem 1.2rem;
+  background: var(--gold-accent-light);
+  color: #854d0e;
+  border: 1px solid var(--gold-accent-border);
+  border-radius: var(--radius-md);
+  margin: 1rem 0 1.5rem;
+  letter-spacing: 0.05em;
+}
+
+body.theme-dark .booking-id-pill {
+  background: rgba(230, 202, 101, 0.2);
+  color: var(--gold-accent);
+}
+
+@media (max-width: 640px) {
+  .intention-types-grid {
+    grid-template-columns: 1fr;
+  }
+  .wizard-steps-bar {
+    display: none;
+  }
+}
