@@ -625,26 +625,121 @@ body.theme-dark .step-number {
 
 @media (max-width: 768px) {
   .nav-links-desktop,
-  .nav-actions-desktop .btn {
-    display: none;
+  .nav-actions-desktop .btn:not(.mobile-menu-btn),
+  .nav-actions-desktop .lang-dropdown-wrapper,
+  .nav-actions-desktop .portals-dropdown-wrapper {
+    display: none !important;
   }
   .mobile-menu-btn {
     display: block;
   }
+
+  .brand-title {
+    font-size: 0.98rem;
+  }
+  .brand-subtitle {
+    font-size: 0.62rem;
+  }
+  .brand-icon-wrapper {
+    width: 38px;
+    height: 38px;
+  }
+
+  .hero-section {
+    padding: 2.5rem 0 3.5rem;
+  }
   .hero-title {
-    font-size: 2.35rem;
+    font-size: 2.15rem;
+    line-height: 1.2;
   }
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    width: 100%;
+  }
+  .hero-actions .btn {
+    width: 100%;
+  }
+
   .hero-stats-strip {
-    flex-wrap: wrap;
-    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    text-align: center;
+    padding-top: 1.25rem;
   }
+  .hero-stat-item h4 {
+    font-size: 1.25rem;
+  }
+  .hero-stat-item p {
+    font-size: 0.7rem;
+  }
+
+  .hero-church-img {
+    height: 240px;
+  }
+
+  .section {
+    padding: 3rem 0;
+  }
+  .section-header {
+    margin-bottom: 2rem;
+  }
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .schedule-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .schedule-tab-btn {
+    padding: 0.45rem 1rem;
+    font-size: 0.825rem;
+  }
+
   .steps-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
+
+  .prayer-reflection-card {
+    padding: 2rem 1.25rem;
+  }
+  .prayer-reflection-card h3 {
+    font-size: 1.45rem;
+  }
+  .prayer-quote {
+    font-size: 1.05rem;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
   }
-  .section {
-    padding: 3.5rem 0;
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
   }
 }
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.85rem;
+  }
+  .hero-stats-strip {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+  }
+  .hero-stats-strip .hero-stat-item:last-child {
+    grid-column: span 2;
+  }
+}
+

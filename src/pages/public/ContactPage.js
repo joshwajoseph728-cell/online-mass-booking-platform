@@ -23,17 +23,17 @@ export function renderContactPage() {
     <!-- Main Grid -->
     <section class="section">
       <div class="container">
-        <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem;">
+        <div class="contact-grid-layout">
           
           <!-- Inquiry Form -->
-          <div class="card card-elevated" style="padding: 2.5rem 2rem;">
+          <div class="card card-elevated" style="padding: 2rem 1.5rem;">
             <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem;">Send a Pastoral Message / Inquiry</h3>
             <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem;">
               Our parish office staff will respond to your message promptly during office hours.
             </p>
 
             <form id="contact-inquiry-form">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-row-2col">
                 <div class="form-group">
                   <label class="form-label" for="contactName">Your Name <span class="required">*</span></label>
                   <input type="text" id="contactName" class="form-control" placeholder="Joseph Fernandez" required />

@@ -328,11 +328,92 @@ body.theme-dark .booking-id-pill {
   color: var(--gold-accent);
 }
 
-@media (max-width: 640px) {
-  .intention-types-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .booking-wizard-container {
+    padding: 0.75rem 0;
   }
+
   .wizard-steps-bar {
+    margin-bottom: 1.5rem;
+  }
+
+  .wizard-steps-bar::before {
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    height: 2px;
+  }
+
+  .step-bubble {
+    width: 30px;
+    height: 30px;
+    font-size: 0.78rem;
+  }
+
+  .step-label {
     display: none;
   }
+
+  .intention-types-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .intention-card-option {
+    padding: 1rem;
+  }
+
+  .time-slots-grid {
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    gap: 0.65rem;
+  }
+
+  .time-slot-btn {
+    padding: 0.75rem 0.5rem;
+  }
+  .time-slot-hour {
+    font-size: 1rem;
+  }
+  .time-slot-meta {
+    font-size: 0.7rem;
+  }
+
+  .offering-chips-row {
+    gap: 0.5rem;
+  }
+  .offering-chip {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.85rem;
+  }
+
+  .review-summary-box {
+    padding: 1rem;
+  }
+  .review-item-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    padding: 0.6rem 0;
+  }
+  .review-item-val {
+    text-align: left;
+    max-width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .confirmation-card-success {
+    padding: 1.75rem 1rem;
+  }
+  .confirmation-check-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+  .booking-id-pill {
+    font-size: 1.05rem;
+    padding: 0.35rem 0.85rem;
+  }
 }
+

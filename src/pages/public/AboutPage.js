@@ -25,7 +25,7 @@ export async function renderAboutPage() {
     <!-- 1. PARISH HISTORY & PATRON SAINT -->
     <section class="section">
       <div class="container">
-        <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem; align-items: center; margin-bottom: 4rem;">
+        <div class="two-col-feature-grid">
           <div>
             <span class="section-eyebrow">Heritage & Roots</span>
             <h2 class="section-title">A Historic Beacon of Catholic Faith</h2>

@@ -218,8 +218,8 @@ a:hover {
 
 /* Subtle Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
@@ -246,3 +246,46 @@ a:hover {
 .animate-fade-in {
   animation: fadeIn var(--transition-normal) ease-out forwards;
 }
+
+/* Mobile Responsive Global Enhancements */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 64px;
+    --sidebar-width: 280px;
+  }
+
+  html {
+    font-size: 15px;
+  }
+
+  .container,
+  .container-narrow {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+  }
+
+  h2 {
+    font-size: clamp(1.4rem, 4vw, 1.85rem);
+  }
+
+  h3 {
+    font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container,
+  .container-narrow {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+}
+

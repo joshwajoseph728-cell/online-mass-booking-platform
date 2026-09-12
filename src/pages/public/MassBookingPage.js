@@ -226,7 +226,7 @@ export async function renderMassBookingPage(router) {
               Provide your contact details for receipt generation and review the offering amount.
             </p>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-row-2col">
               <div class="form-group">
                 <label class="form-label" for="fullName">
                   <span>Full Name <span class="required">*</span></span>

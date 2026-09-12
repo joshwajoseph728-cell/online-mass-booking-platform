@@ -152,10 +152,10 @@ export const paymentService = {
           </div>
 
           <!-- Common Step 1: Scan & Pay Details -->
-          <div style="display: grid; grid-template-columns: 130px 1fr; gap: 1rem; align-items: center; background: var(--bg-surface-elevated); padding: 0.85rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-bottom: 1.25rem;">
+          <div class="qr-banner-grid" style="background: var(--bg-surface-elevated); padding: 0.85rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-bottom: 1.25rem;">
             <div style="text-align: center;">
               <div style="background: white; padding: 0.35rem; border-radius: var(--radius-md); display: inline-block; border: 1px solid var(--gold-accent);">
-                <img src="${qrCodeUrl}" alt="Parish UPI QR Code" style="width: 110px; height: 110px; display: block;" />
+                <img src="${qrCodeUrl}" alt="Parish UPI QR Code" style="width: 105px; height: 105px; display: block;" />
               </div>
             </div>
 
@@ -177,11 +177,11 @@ export const paymentService = {
 
           <!-- Payment Tabs Selector (Option 1 vs Option 2) -->
           <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem; border-bottom: 1.5px solid var(--border-medium); padding-bottom: 0.75rem;">
-            <button type="button" id="tab-btn-utr" class="btn btn-sm btn-primary" style="flex: 1; font-size: 0.85rem; font-weight: 700; padding: 0.45rem 0.6rem;">
-              🔢 Option 1: Enter 12-Digit UTR
+            <button type="button" id="tab-btn-utr" class="btn btn-sm btn-primary" style="flex: 1; font-size: 0.82rem; font-weight: 700; padding: 0.45rem 0.5rem;">
+              🔢 Option 1: Enter UTR
             </button>
-            <button type="button" id="tab-btn-screenshot" class="btn btn-sm btn-secondary" style="flex: 1; font-size: 0.85rem; font-weight: 700; padding: 0.45rem 0.6rem;">
-              📸 Option 2: Upload Screenshot
+            <button type="button" id="tab-btn-screenshot" class="btn btn-sm btn-secondary" style="flex: 1; font-size: 0.82rem; font-weight: 700; padding: 0.45rem 0.5rem;">
+              📸 Option 2: Screenshot
             </button>
           </div>
 
@@ -207,7 +207,7 @@ export const paymentService = {
               <div id="utr-validation-msg" style="font-size: 0.75rem; margin-top: 0.35rem; display: none;"></div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem;">
+            <div class="form-row-2col" style="margin-bottom: 1.25rem;">
               <div class="form-group" style="margin: 0;">
                 <label class="form-label" style="font-size: 0.78rem; margin-bottom: 0.25rem;">Payment App Used</label>
                 <select id="utr-app-select" class="form-select" style="font-size: 0.82rem; padding: 0.4rem 0.6rem;">

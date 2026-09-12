@@ -527,3 +527,154 @@
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* ------------------------------------------------------------
+   MOBILE RESPONSIVE COMPONENT ADJUSTMENTS
+   ------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .btn {
+    padding: 0.6rem 1.15rem;
+    font-size: 0.9rem;
+    min-height: 42px;
+  }
+
+  .btn-lg {
+    padding: 0.75rem 1.4rem;
+    font-size: 0.98rem;
+    min-height: 48px;
+  }
+
+  .card-header {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .card-footer {
+    padding: 0.85rem 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .modal-backdrop {
+    padding: 0.5rem;
+  }
+
+  .modal-dialog {
+    max-height: 94vh;
+    border-radius: var(--radius-lg);
+  }
+
+  .modal-header {
+    padding: 1rem 1.15rem;
+  }
+
+  .modal-body {
+    padding: 1.15rem 1rem;
+  }
+
+  .modal-footer {
+    padding: 0.85rem 1rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+
+  .toast-container {
+    top: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    max-width: 100%;
+  }
+
+  .form-control,
+  .form-select {
+    font-size: 16px; /* Prevents auto-zoom on mobile browsers */
+    padding: 0.65rem 0.85rem;
+    min-height: 44px;
+  }
+
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .church-table th,
+  .church-table td {
+    padding: 0.75rem 0.65rem;
+    font-size: 0.825rem;
+    white-space: nowrap;
+  }
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE FORM & GRID UTILITIES
+   ------------------------------------------------------------ */
+.form-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-row-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.qr-banner-grid {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.contact-grid-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3.5rem;
+}
+
+.two-col-feature-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3.5rem;
+  align-items: center;
+  margin-bottom: 4.5rem;
+}
+
+@media (max-width: 900px) {
+  .contact-grid-layout,
+  .two-col-feature-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .form-row-2col,
+  .form-row-3col {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .qr-banner-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 0.75rem;
+  }
+}
+
+
+
