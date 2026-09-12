@@ -139,9 +139,26 @@ export function initSeedStore() {
 // Auto-run init
 initSeedStore();
 
+import { supabaseService } from './supabaseService.js';
+
 export const firestoreService = {
-  // Generic collection fetcher
+  // Generic collection fetcher (with Supabase live cloud priority)
   async getCollection(colName) {
+    // 1. Supabase PostgreSQL Live Sync
+    if (supabaseService.isConfigured()) {
+      if (colName === 'massIntentions' || colName === 'bookings') {
+        const supaBookings = await supabaseService.getAllBookings();
+        if (supaBookings) return supaBookings;
+      } else if (colName === 'massSchedules' || colName === 'schedules') {
+        const supaSchedules = await supabaseService.getSchedules();
+        if (supaSchedules) return supaSchedules;
+      } else if (colName === 'priests') {
+        const supaPriests = await supabaseService.getPriests();
+        if (supaPriests) return supaPriests;
+      }
+    }
+
+    // 2. Firebase Firestore Fallback
     if (isFirebaseConfigured && db) {
       try {
         const snap = await getDocs(collection(db, colName));
@@ -150,11 +167,21 @@ export const firestoreService = {
         console.warn(`Firestore getCollection [${colName}] error, falling back to local:`, err);
       }
     }
+
+    // 3. Local Cache / Offline Fallback
     return getLocalCollection(colName);
   },
 
   // Get single document
   async getDocument(colName, docId) {
+    if (supabaseService.isConfigured() && (colName === 'massIntentions' || colName === 'bookings')) {
+      const all = await supabaseService.getAllBookings();
+      if (all) {
+        const found = all.find(b => b.id === docId || b.bookingId === docId);
+        if (found) return found;
+      }
+    }
+
     if (isFirebaseConfigured && db) {
       try {
         const snap = await getDoc(doc(db, colName, docId));
@@ -177,6 +204,12 @@ export const firestoreService = {
       updatedAt: new Date().toISOString()
     };
 
+    // 1. Supabase PostgreSQL live persistence
+    if (supabaseService.isConfigured() && (colName === 'massIntentions' || colName === 'bookings')) {
+      await supabaseService.saveBooking(payload);
+    }
+
+    // 2. Firebase Firestore persistence
     if (isFirebaseConfigured && db) {
       try {
         await setDoc(doc(db, colName, docId), payload, { merge: true });
@@ -200,6 +233,12 @@ export const firestoreService = {
 
   // Update specific fields
   async updateDocument(colName, docId, updates) {
+    // 1. Supabase PostgreSQL update
+    if (supabaseService.isConfigured() && (colName === 'massIntentions' || colName === 'bookings')) {
+      await supabaseService.updateBooking(docId, updates);
+    }
+
+    // 2. Firebase Firestore update
     if (isFirebaseConfigured && db) {
       try {
         await updateDoc(doc(db, colName, docId), updates);
