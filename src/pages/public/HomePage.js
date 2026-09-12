@@ -75,7 +75,7 @@ export async function renderHomePage() {
     <!-- 2. WELCOME / ABOUT CHURCH -->
     <section class="section">
       <div class="container">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center;">
+        <div class="vicar-message-grid">
           <div>
             <span class="section-eyebrow">A Message from the Parish Vicar</span>
             <h2 class="section-title">A Living Sanctuary of Prayer, Grace & Fellowship</h2>
@@ -96,7 +96,7 @@ export async function renderHomePage() {
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="intentions-preview-grid">
             <div class="card card-elevated" style="padding: 1.5rem; text-align: center;">
               <div style="font-size: 2rem; margin-bottom: 0.5rem;">🕊️</div>
               <h4 style="font-size: 1.1rem; margin-bottom: 0.25rem;">${i18n.t('intention.departed')}</h4>

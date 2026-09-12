@@ -145,104 +145,126 @@ export function renderNavbar(activePath = '/') {
         </div>
       </div>
 
-      <!-- Mobile Navigation Drawer -->
+      <!-- Full-Screen Mobile Navigation Drawer -->
       <div id="mobile-nav-drawer" class="mobile-nav-drawer">
         
-        <!-- 1. Prominent Language Selector Block -->
-        <div class="mobile-drawer-section">
-          <div class="mobile-drawer-section-title">
-            <span>🌐</span>
-            <span>Select Language / மொழியை தேர்ந்தெடுக்கவும்</span>
+        <!-- Full-Screen Drawer Top Header -->
+        <div class="mobile-drawer-topbar">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="brand-icon-wrapper" style="width: 36px; height: 36px;">
+              ${currentLogo ? `
+                <img src="${currentLogo}" alt="Church Logo" style="width: 28px; height: 28px; object-fit: contain;" />
+              ` : `
+                <span style="font-size: 1.1rem; color: var(--gold-accent);">✝</span>
+              `}
+            </div>
+            <div>
+              <h4 style="margin: 0; font-size: 0.95rem; font-family: var(--font-serif);">${i18n.t('brand.title')}</h4>
+              <p style="margin: 0; font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">${i18n.t('brand.subtitle')}</p>
+            </div>
           </div>
-          <div class="mobile-lang-grid">
-            <button type="button" class="mobile-lang-btn lang-select-opt ${currentLang === 'en' ? 'active' : ''}" data-lang="en">
-              <span style="display: flex; align-items: center; gap: 0.6rem;">
-                <span style="font-size: 1.25rem;">🇬🇧</span> English
-              </span>
-              ${currentLang === 'en' ? '<span style="color: var(--gold-accent); font-weight: 800;">✓ Active</span>' : '<span style="color: var(--text-muted); font-size: 0.8rem;">Select</span>'}
-            </button>
-            <button type="button" class="mobile-lang-btn lang-select-opt ${currentLang === 'ta' ? 'active' : ''}" data-lang="ta">
-              <span style="display: flex; align-items: center; gap: 0.6rem;">
-                <span style="font-size: 1.25rem;">🇮🇳</span> தமிழ் (Tamil)
-              </span>
-              ${currentLang === 'ta' ? '<span style="color: var(--gold-accent); font-weight: 800;">✓ தேர்வு</span>' : '<span style="color: var(--text-muted); font-size: 0.8rem;">Select</span>'}
-            </button>
-            <button type="button" class="mobile-lang-btn lang-select-opt ${currentLang === 'ml' ? 'active' : ''}" data-lang="ml">
-              <span style="display: flex; align-items: center; gap: 0.6rem;">
-                <span style="font-size: 1.25rem;">🇮🇳</span> മലയാളം (Malayalam)
-              </span>
-              ${currentLang === 'ml' ? '<span style="color: var(--gold-accent); font-weight: 800;">✓ തിരഞ്ഞെടുത്തു</span>' : '<span style="color: var(--text-muted); font-size: 0.8rem;">Select</span>'}
-            </button>
-          </div>
+          <button type="button" id="mobile-drawer-close" class="mobile-drawer-close-btn" aria-label="Close Menu">
+            &times;
+          </button>
         </div>
 
-        <!-- 2. Prominent Church Portals Block -->
-        <div class="mobile-drawer-section">
-          <div class="mobile-drawer-section-title">
-            <span>🚪</span>
-            <span>Church Portals / பிரவேசம்</span>
-          </div>
-          <div class="mobile-portals-grid">
-            <a href="/login?portal=admin" class="mobile-portal-card" data-route="/login?portal=admin">
-              <div class="mobile-portal-icon" style="background: rgba(30, 58, 138, 0.1); color: var(--primary-navy);">👑</div>
-              <div class="mobile-portal-info">
-                <span class="mobile-portal-name">Admin Portal</span>
-                <span class="mobile-portal-desc">Parish administration, financial approvals & UTR verification</span>
-              </div>
-              <span style="color: var(--text-muted); font-size: 1.1rem;">&rarr;</span>
-            </a>
-            <a href="/login?portal=priest" class="mobile-portal-card" data-route="/login?portal=priest">
-              <div class="mobile-portal-icon" style="background: rgba(212, 175, 55, 0.15); color: #854d0e;">✝️</div>
-              <div class="mobile-portal-info">
-                <span class="mobile-portal-name">Priest Portal</span>
-                <span class="mobile-portal-desc">Today's altar prayer list, intention celebrant book & calendar</span>
-              </div>
-              <span style="color: var(--text-muted); font-size: 1.1rem;">&rarr;</span>
-            </a>
-            <a href="/login?portal=member" class="mobile-portal-card" data-route="/login?portal=member">
-              <div class="mobile-portal-icon" style="background: rgba(21, 128, 61, 0.1); color: var(--success);">👤</div>
-              <div class="mobile-portal-info">
-                <span class="mobile-portal-name">Member Portal</span>
-                <span class="mobile-portal-desc">Parishioner dashboard, booked intentions & PDF receipts</span>
-              </div>
-              <span style="color: var(--text-muted); font-size: 1.1rem;">&rarr;</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- 3. Full Navigation Links -->
-        <div class="mobile-drawer-section">
-          <div class="mobile-drawer-section-title">
-            <span>⛪</span>
-            <span>Navigation Pages</span>
-          </div>
-          <div class="mobile-nav-links-list">
-            ${links.map(l => `
-              <a href="${l.path}" class="mobile-nav-link-item ${activePath === l.path ? 'active' : ''}" data-route="${l.path}">
-                <span style="display: flex; align-items: center; gap: 0.75rem;">
-                  <span style="font-size: 1.25rem;">${l.icon}</span>
-                  <span>${l.label}</span>
+        <div class="mobile-drawer-body">
+          <!-- 1. Prominent Language Selector Block -->
+          <div class="mobile-drawer-section">
+            <div class="mobile-drawer-section-title">
+              <span>🌐</span>
+              <span>Select Language / மொழியை தேர்ந்தெடுக்கவும்</span>
+            </div>
+            <div class="mobile-lang-grid">
+              <button type="button" class="mobile-lang-btn lang-select-opt ${currentLang === 'en' ? 'active' : ''}" data-lang="en">
+                <span style="display: flex; align-items: center; gap: 0.6rem;">
+                  <span style="font-size: 1.25rem;">🇬🇧</span> English
                 </span>
-                <span style="font-size: 0.9rem; opacity: 0.7;">&rsaquo;</span>
-              </a>
-            `).join('')}
+                ${currentLang === 'en' ? '<span style="color: var(--gold-accent); font-weight: 800;">✓ Active</span>' : '<span style="color: var(--text-muted); font-size: 0.8rem;">Select</span>'}
+              </button>
+              <button type="button" class="mobile-lang-btn lang-select-opt ${currentLang === 'ta' ? 'active' : ''}" data-lang="ta">
+                <span style="display: flex; align-items: center; gap: 0.6rem;">
+                  <span style="font-size: 1.25rem;">🇮🇳</span> தமிழ் (Tamil)
+                </span>
+                ${currentLang === 'ta' ? '<span style="color: var(--gold-accent); font-weight: 800;">✓ தேர்வு</span>' : '<span style="color: var(--text-muted); font-size: 0.8rem;">Select</span>'}
+              </button>
+              <button type="button" class="mobile-lang-btn lang-select-opt ${currentLang === 'ml' ? 'active' : ''}" data-lang="ml">
+                <span style="display: flex; align-items: center; gap: 0.6rem;">
+                  <span style="font-size: 1.25rem;">🇮🇳</span> മലയാളം (Malayalam)
+                </span>
+                ${currentLang === 'ml' ? '<span style="color: var(--gold-accent); font-weight: 800;">✓ തിരഞ്ഞെടുത്തു</span>' : '<span style="color: var(--text-muted); font-size: 0.8rem;">Select</span>'}
+              </button>
+            </div>
           </div>
-        </div>
 
-        <!-- 4. Main CTAs at Bottom -->
-        <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem;">
-          ${user ? `
-            <a href="${dashboardUrl}" class="btn btn-gold btn-lg btn-block" data-route="${dashboardUrl}" style="font-weight: 700; box-shadow: var(--shadow-gold);">
-              ⛪ Go to ${dashboardLabel} &rarr;
-            </a>
-          ` : `
-            <a href="/mass-booking" class="btn btn-gold btn-lg btn-block" data-route="/mass-booking" style="font-weight: 700; box-shadow: var(--shadow-gold);">
-              ✍️ ${i18n.t('nav.bookMass')} &rarr;
-            </a>
-            <a href="/login" class="btn btn-outline btn-lg btn-block" data-route="/login" style="font-weight: 700;">
-              🔐 ${i18n.t('nav.signIn')}
-            </a>
-          `}
+          <!-- 2. Prominent Church Portals Block -->
+          <div class="mobile-drawer-section">
+            <div class="mobile-drawer-section-title">
+              <span>🚪</span>
+              <span>Church Portals / பிரவேசம்</span>
+            </div>
+            <div class="mobile-portals-grid">
+              <a href="/login?portal=admin" class="mobile-portal-card" data-route="/login?portal=admin">
+                <div class="mobile-portal-icon" style="background: rgba(30, 58, 138, 0.1); color: var(--primary-navy);">👑</div>
+                <div class="mobile-portal-info">
+                  <span class="mobile-portal-name">Admin Portal</span>
+                  <span class="mobile-portal-desc">Parish administration, financial approvals & UTR verification</span>
+                </div>
+                <span style="color: var(--text-muted); font-size: 1.1rem;">&rarr;</span>
+              </a>
+              <a href="/login?portal=priest" class="mobile-portal-card" data-route="/login?portal=priest">
+                <div class="mobile-portal-icon" style="background: rgba(212, 175, 55, 0.15); color: #854d0e;">✝️</div>
+                <div class="mobile-portal-info">
+                  <span class="mobile-portal-name">Priest Portal</span>
+                  <span class="mobile-portal-desc">Today's altar prayer list, intention celebrant book & calendar</span>
+                </div>
+                <span style="color: var(--text-muted); font-size: 1.1rem;">&rarr;</span>
+              </a>
+              <a href="/login?portal=member" class="mobile-portal-card" data-route="/login?portal=member">
+                <div class="mobile-portal-icon" style="background: rgba(21, 128, 61, 0.1); color: var(--success);">👤</div>
+                <div class="mobile-portal-info">
+                  <span class="mobile-portal-name">Member Portal</span>
+                  <span class="mobile-portal-desc">Parishioner dashboard, booked intentions & PDF receipts</span>
+                </div>
+                <span style="color: var(--text-muted); font-size: 1.1rem;">&rarr;</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 3. Full Navigation Links -->
+          <div class="mobile-drawer-section">
+            <div class="mobile-drawer-section-title">
+              <span>⛪</span>
+              <span>Navigation Pages</span>
+            </div>
+            <div class="mobile-nav-links-list">
+              ${links.map(l => `
+                <a href="${l.path}" class="mobile-nav-link-item ${activePath === l.path ? 'active' : ''}" data-route="${l.path}">
+                  <span style="display: flex; align-items: center; gap: 0.75rem;">
+                    <span style="font-size: 1.25rem;">${l.icon}</span>
+                    <span>${l.label}</span>
+                  </span>
+                  <span style="font-size: 0.9rem; opacity: 0.7;">&rsaquo;</span>
+                </a>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- 4. Main CTAs at Bottom -->
+          <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem;">
+            ${user ? `
+              <a href="${dashboardUrl}" class="btn btn-gold btn-lg btn-block" data-route="${dashboardUrl}" style="font-weight: 700; box-shadow: var(--shadow-gold);">
+                ⛪ Go to ${dashboardLabel} &rarr;
+              </a>
+            ` : `
+              <a href="/mass-booking" class="btn btn-gold btn-lg btn-block" data-route="/mass-booking" style="font-weight: 700; box-shadow: var(--shadow-gold);">
+                ✍️ ${i18n.t('nav.bookMass')} &rarr;
+              </a>
+              <a href="/login" class="btn btn-outline btn-lg btn-block" data-route="/login" style="font-weight: 700;">
+                🔐 ${i18n.t('nav.signIn')}
+              </a>
+            `}
+          </div>
         </div>
 
       </div>
@@ -313,18 +335,41 @@ export function attachNavbarEvents(router) {
 
   const mobileTrigger = document.getElementById('mobile-menu-trigger');
   const mobileDrawer = document.getElementById('mobile-nav-drawer');
+  const mobileCloseBtn = document.getElementById('mobile-drawer-close');
+
+  const closeMobileMenu = () => {
+    if (mobileDrawer) {
+      mobileDrawer.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    if (mobileTrigger) mobileTrigger.innerHTML = '☰';
+  };
+
+  const openMobileMenu = () => {
+    if (mobileDrawer) {
+      mobileDrawer.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    if (mobileTrigger) mobileTrigger.innerHTML = '✕';
+  };
+
   if (mobileTrigger && mobileDrawer) {
     mobileTrigger.addEventListener('click', () => {
-      mobileDrawer.classList.toggle('open');
-      mobileTrigger.innerHTML = mobileDrawer.classList.contains('open') ? '✕' : '☰';
+      if (mobileDrawer.classList.contains('open')) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
     });
 
+    if (mobileCloseBtn) {
+      mobileCloseBtn.addEventListener('click', closeMobileMenu);
+    }
+
     mobileDrawer.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileDrawer.classList.remove('open');
-        mobileTrigger.innerHTML = '☰';
-      });
+      link.addEventListener('click', closeMobileMenu);
     });
   }
 }
+
 
