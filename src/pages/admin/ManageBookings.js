@@ -6,7 +6,6 @@ import { notificationService } from '../../services/notificationService.js';
 import { formatDate, formatDateTime } from '../../utils/dateUtils.js';
 import { formatCurrency } from '../../utils/formatters.js';
 import { renderOfflineBookingModalHtml, attachOfflineBookingModalEvents } from '../../components/OfflineBookingModal.js';
-import { supabaseService } from '../../services/supabaseService.js';
 
 export async function renderManageBookingsPage(router) {
   const bookings = await firestoreService.getCollection('massIntentions');
@@ -221,27 +220,24 @@ export function attachManageBookingsEvents(router) {
 
   // Refresh live data button
   document.getElementById('btn-refresh-bookings')?.addEventListener('click', () => {
-    notificationService.info('Refreshing bookings from Supabase cloud...');
+    notificationService.info('Refreshing bookings from Firebase...');
     router.navigate('/admin/bookings');
   });
 
-  // Supabase Realtime Listener: Auto-update on new booking from any phone
-  if (supabaseService.isConfigured()) {
-    const channel = supabaseService.subscribeToBookings((payload) => {
-      if (payload.eventType === 'INSERT') {
-        const booker = payload.new?.full_name || 'A parishioner';
-        const souls = payload.new?.person_names || '';
-        notificationService.success(`🔔 New Mass Intention received from ${booker} (${souls})!`);
-        setTimeout(() => {
-          router.navigate('/admin/bookings');
-        }, 800);
-      } else if (payload.eventType === 'UPDATE') {
-        setTimeout(() => {
-          router.navigate('/admin/bookings');
-        }, 500);
-      }
-    });
-  }
+  // Firebase Realtime Listener: Auto-update on new booking from any phone
+  let _prevCount = document.querySelectorAll('#admin-bookings-tbody tr').length;
+  firestoreService.subscribeToCollection('massIntentions', (docs) => {
+    if (docs.length > _prevCount) {
+      const newest = docs[docs.length - 1];
+      const booker = newest?.fullName || newest?.full_name || 'A parishioner';
+      const souls = newest?.personNames || newest?.person_names || '';
+      notificationService.success(`🔔 New Mass Intention from ${booker} (${souls})!`);
+      setTimeout(() => { router.navigate('/admin/bookings'); }, 800);
+    } else if (docs.length !== _prevCount) {
+      setTimeout(() => { router.navigate('/admin/bookings'); }, 500);
+    }
+    _prevCount = docs.length;
+  });
 
   // Quick filter for pending verifications
   document.getElementById('btn-filter-pending-screenshots')?.addEventListener('click', () => {

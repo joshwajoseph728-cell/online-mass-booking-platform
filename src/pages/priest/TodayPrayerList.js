@@ -6,7 +6,7 @@ import { authService } from '../../services/authService.js';
 import { getTodayDateString, formatFullDate } from '../../utils/dateUtils.js';
 import { formatCurrency } from '../../utils/formatters.js';
 import { renderOfflineBookingModalHtml, attachOfflineBookingModalEvents } from '../../components/OfflineBookingModal.js';
-import { supabaseService } from '../../services/supabaseService.js';
+import { firestoreService } from '../../services/firestoreService.js';
 
 export async function renderTodayPrayerListPage(router) {
   const todayStr = getTodayDateString();
@@ -210,14 +210,10 @@ export function attachTodayPrayerListEvents(router) {
     router.navigate('/priest/today-prayers');
   });
 
-  // Supabase Realtime Listener for priest altar list
-  if (supabaseService.isConfigured()) {
-    supabaseService.subscribeToBookings((payload) => {
-      if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
-        router.navigate('/priest/today-prayers');
-      }
-    });
-  }
+  // Firebase Realtime Listener: auto-refresh altar sheet when new booking arrives
+  firestoreService.subscribeToCollection('massIntentions', () => {
+    router.navigate('/priest/today-prayers');
+  });
 
   // Download Altar Sheet PDF
   document.getElementById('btn-dl-altar-pdf')?.addEventListener('click', async () => {
